@@ -8,17 +8,39 @@ namespace EMMath
     {
         // Members
         public float x, y;
+
         //Length
-        public float CalculateLength()
+        public float Length()
         {
-            return Mathf.Sqrt(x * x + y * y);
+            return Mathf.Sqrt(LengthSq());
         }
-        public static float CalculateLength(MyVector2 x)
+        public static float Length(MyVector2 x)
         {
-            return x.CalculateLength();
+            return x.Length();
         }
+        public float LengthSq()
+        {
+            return (x * x + y * y);
+        }
+        public static float LengthSq(MyVector2 x)
+        {
+            return x.LengthSq();
+        }
+        public MyVector2 Normalise()
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = x;
+            rv.y = y;
+            rv /= rv.Length();
+            return rv;
+        }
+        public static MyVector2 Normalise(MyVector2 x)
+        {
+            return x.Normalise();
+        }
+
         //Opperators
-        public static MyVector2 AddVectors(MyVector2 lhs, MyVector2 rhs)
+        public static MyVector2 Add(MyVector2 lhs, MyVector2 rhs)
         {
             MyVector2 rv = new MyVector2();
             rv.x = lhs.x + rhs.x;
@@ -27,9 +49,20 @@ namespace EMMath
         }
         public static MyVector2 operator +(MyVector2 lhs, MyVector2 rhs)
         {
-            return AddVectors(lhs, rhs);
+            return Add(lhs, rhs);
         }
-        public static MyVector2 SubtractVectors(MyVector2 lhs, MyVector2 rhs)
+        public static MyVector2 Add(MyVector2 lhs, float rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x + rhs;
+            rv.y = lhs.y + rhs;
+            return rv;
+        }
+        public static MyVector2 operator +(MyVector2 lhs, float rhs)
+        {
+            return Add(lhs, rhs);
+        }
+        public static MyVector2 Subtract(MyVector2 lhs, MyVector2 rhs)
         {
             MyVector2 rv = new MyVector2();
             rv.x = lhs.x - rhs.x;
@@ -38,7 +71,62 @@ namespace EMMath
         }
         public static MyVector2 operator -(MyVector2 lhs, MyVector2 rhs)
         {
-            return SubtractVectors(lhs, rhs);
+            return Subtract(lhs, rhs);
+        }
+        public static MyVector2 Subtract(MyVector2 lhs, float rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x - rhs;
+            rv.y = lhs.y - rhs;
+            return rv;
+        }
+        public static MyVector2 operator -(MyVector2 lhs, float rhs)
+        {
+            return Subtract(lhs, rhs);
+        }
+        public static MyVector2 Multiply(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x * rhs.x;
+            rv.y = lhs.y * rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator *(MyVector2 lhs, MyVector2 rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector2 Multiply(MyVector2 lhs, float rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x * rhs;
+            rv.y = lhs.y * rhs;
+            return rv;
+        }
+        public static MyVector2 operator *(MyVector2 lhs, float rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector2 Divide(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x / rhs.x;
+            rv.y = lhs.y / rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator /(MyVector2 lhs, MyVector2 rhs)
+        {
+            return Divide(lhs, rhs);
+        }
+        public static MyVector2 Divide(MyVector2 lhs, float rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x / rhs;
+            rv.y = lhs.y / rhs;
+            return rv;
+        }
+        public static MyVector2 operator /(MyVector2 lhs, float rhs)
+        {
+            return Divide(lhs, rhs);
         }
 
         //Conversion
@@ -72,17 +160,27 @@ namespace EMMath
     {
         // Members
         public float x, y, z;
+
         //Length
-        public float CalculateLength()
+        public float Length()
         {
-            return Mathf.Sqrt(x * x + y * y + z * z);
+            return Mathf.Sqrt(LengthSq());
         }
-        public static float CalculateLength(MyVector3 x)
+        public static float Length(MyVector2 x)
         {
-            return x.CalculateLength();
+            return x.Length();
         }
+        public float LengthSq()
+        {
+            return (x * x + y * y + z * z);
+        }
+        public static float LengthSq(MyVector3 x)
+        {
+            return x.LengthSq();
+        }
+
         //Opperators
-        public static MyVector3 AddVectors(MyVector3 lhs, MyVector3 rhs)
+        public static MyVector3 Add(MyVector3 lhs, MyVector3 rhs)
         {
             MyVector3 rv = new MyVector3();
             rv.x = lhs.x + rhs.x;
@@ -92,9 +190,9 @@ namespace EMMath
         }
         public static MyVector3 operator +(MyVector3 lhs, MyVector3 rhs)
         {
-            return AddVectors(lhs, rhs);
+            return Add(lhs, rhs);
         }
-        public static MyVector3 SubtractVectors(MyVector3 lhs, MyVector3 rhs)
+        public static MyVector3 Subtract(MyVector3 lhs, MyVector3 rhs)
         {
             MyVector3 rv = new MyVector3();
             rv.x = lhs.x - rhs.x;
@@ -104,7 +202,7 @@ namespace EMMath
         }
         public static MyVector3 operator -(MyVector3 lhs, MyVector3 rhs)
         {
-            return SubtractVectors(lhs, rhs);
+            return Subtract(lhs, rhs);
         }
 
         //Conversion
@@ -148,16 +246,24 @@ namespace EMMath
         // Members
         public float x, y, z, w;
         //Length
-        public float CalculateLength()
+        public float Length()
         {
-            return Mathf.Sqrt(x * x + y * y + z * z + w * w);
+            return Mathf.Sqrt(LengthSq());
         }
-        public static float CalculateLength(MyVector4 x)
+        public static float Length(MyVector4 x)
         {
-            return x.CalculateLength();
+            return x.Length();
+        }
+        public float LengthSq()
+        {
+            return (x * x + y * y + z * z + w * w);
+        }
+        public static float LengthSq(MyVector4 x)
+        {
+            return x.LengthSq();
         }
         //Opperators
-        public static MyVector4 AddVectors(MyVector4 lhs, MyVector4 rhs)
+        public static MyVector4 Add(MyVector4 lhs, MyVector4 rhs)
         {
             MyVector4 rv = new MyVector4();
             rv.x = lhs.x + rhs.x;
@@ -168,9 +274,9 @@ namespace EMMath
         }
         public static MyVector4 operator +(MyVector4 lhs, MyVector4 rhs)
         {
-            return AddVectors(lhs, rhs);
+            return Add(lhs, rhs);
         }
-        public static MyVector4 SubtractVectors(MyVector4 lhs, MyVector4 rhs)
+        public static MyVector4 Subtract(MyVector4 lhs, MyVector4 rhs)
         {
             MyVector4 rv = new MyVector4();
             rv.x = lhs.x - rhs.x;
@@ -181,7 +287,7 @@ namespace EMMath
         }
         public static MyVector4 operator -(MyVector4 lhs, MyVector4 rhs)
         {
-            return SubtractVectors(lhs, rhs);
+            return Subtract(lhs, rhs);
         }
 
         //Conversion
