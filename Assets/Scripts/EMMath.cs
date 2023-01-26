@@ -166,7 +166,7 @@ namespace EMMath
         {
             return Mathf.Sqrt(LengthSq());
         }
-        public static float Length(MyVector2 x)
+        public static float Length(MyVector3 x)
         {
             return x.Length();
         }
@@ -177,6 +177,19 @@ namespace EMMath
         public static float LengthSq(MyVector3 x)
         {
             return x.LengthSq();
+        }
+        public MyVector3 Normalise()
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = x;
+            rv.y = y;
+            rv.z = z;
+            rv /= rv.Length();
+            return rv;
+        }
+        public static MyVector3 Normalise(MyVector3 x)
+        {
+            return x.Normalise();
         }
 
         //Opperators
@@ -192,6 +205,18 @@ namespace EMMath
         {
             return Add(lhs, rhs);
         }
+        public static MyVector3 Add(MyVector3 lhs, float rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x + rhs;
+            rv.y = lhs.y + rhs;
+            rv.z = lhs.z + rhs;
+            return rv;
+        }
+        public static MyVector3 operator +(MyVector3 lhs, float rhs)
+        {
+            return Add(lhs, rhs);
+        }
         public static MyVector3 Subtract(MyVector3 lhs, MyVector3 rhs)
         {
             MyVector3 rv = new MyVector3();
@@ -203,6 +228,66 @@ namespace EMMath
         public static MyVector3 operator -(MyVector3 lhs, MyVector3 rhs)
         {
             return Subtract(lhs, rhs);
+        }
+        public static MyVector3 Subtract(MyVector3 lhs, float rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x - rhs;
+            rv.y = lhs.y - rhs;
+            rv.z = lhs.z - rhs;
+            return rv;
+        }
+        public static MyVector3 operator -(MyVector3 lhs, float rhs)
+        {
+            return Subtract(lhs, rhs);
+        }
+        public static MyVector3 Multiply(MyVector3 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x * rhs.x;
+            rv.y = lhs.y * rhs.y;
+            rv.z = lhs.z * rhs.z;
+            return rv;
+        }
+        public static MyVector3 operator *(MyVector3 lhs, MyVector3 rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector3 Multiply(MyVector3 lhs, float rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x * rhs;
+            rv.y = lhs.y * rhs;
+            rv.z = lhs.z * rhs;
+            return rv;
+        }
+        public static MyVector3 operator *(MyVector3 lhs, float rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector3 Divide(MyVector3 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x / rhs.x;
+            rv.y = lhs.y / rhs.y;
+            rv.z = lhs.z / rhs.z;
+            return rv;
+        }
+        public static MyVector3 operator /(MyVector3 lhs, MyVector3 rhs)
+        {
+            return Divide(lhs, rhs);
+        }
+        public static MyVector3 Divide(MyVector3 lhs, float rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x / rhs;
+            rv.y = lhs.y / rhs;
+            rv.z = lhs.z / rhs;
+            return rv;
+        }
+        public static MyVector3 operator /(MyVector3 lhs, float rhs)
+        {
+            return Divide(lhs, rhs);
         }
 
         //Conversion
@@ -245,6 +330,7 @@ namespace EMMath
     {
         // Members
         public float x, y, z, w;
+
         //Length
         public float Length()
         {
@@ -262,6 +348,21 @@ namespace EMMath
         {
             return x.LengthSq();
         }
+        public MyVector4 Normalise()
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = x;
+            rv.y = y;
+            rv.z = z;
+            rv.w = w;
+            rv /= rv.Length();
+            return rv;
+        }
+        public static MyVector4 Normalise(MyVector4 x)
+        {
+            return x.Normalise();
+        }
+
         //Opperators
         public static MyVector4 Add(MyVector4 lhs, MyVector4 rhs)
         {
@@ -273,6 +374,19 @@ namespace EMMath
             return rv;
         }
         public static MyVector4 operator +(MyVector4 lhs, MyVector4 rhs)
+        {
+            return Add(lhs, rhs);
+        }
+        public static MyVector4 Add(MyVector4 lhs, float rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x + rhs;
+            rv.y = lhs.y + rhs;
+            rv.z = lhs.z + rhs;
+            rv.w = lhs.w + rhs;
+            return rv;
+        }
+        public static MyVector4 operator +(MyVector4 lhs, float rhs)
         {
             return Add(lhs, rhs);
         }
@@ -288,6 +402,71 @@ namespace EMMath
         public static MyVector4 operator -(MyVector4 lhs, MyVector4 rhs)
         {
             return Subtract(lhs, rhs);
+        }
+        public static MyVector4 Subtract(MyVector4 lhs, float rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x - rhs;
+            rv.y = lhs.y - rhs;
+            rv.z = lhs.z - rhs;
+            rv.w = lhs.w - rhs;
+            return rv;
+        }
+        public static MyVector4 operator -(MyVector4 lhs, float rhs)
+        {
+            return Subtract(lhs, rhs);
+        }
+        public static MyVector4 Multiply(MyVector4 lhs, MyVector4 rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x * rhs.x;
+            rv.y = lhs.y * rhs.y;
+            rv.z = lhs.z * rhs.z;
+            rv.w = lhs.w * rhs.w;
+            return rv;
+        }
+        public static MyVector4 operator *(MyVector4 lhs, MyVector4 rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector4 Multiply(MyVector4 lhs, float rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x * rhs;
+            rv.y = lhs.y * rhs;
+            rv.z = lhs.z * rhs;
+            rv.w = lhs.w * rhs;
+            return rv;
+        }
+        public static MyVector4 operator *(MyVector4 lhs, float rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
+        public static MyVector4 Divide(MyVector4 lhs, MyVector4 rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x / rhs.x;
+            rv.y = lhs.y / rhs.y;
+            rv.z = lhs.z / rhs.z;
+            rv.w = lhs.w / rhs.w;
+            return rv;
+        }
+        public static MyVector4 operator /(MyVector4 lhs, MyVector4 rhs)
+        {
+            return Divide(lhs, rhs);
+        }
+        public static MyVector4 Divide(MyVector4 lhs, float rhs)
+        {
+            MyVector4 rv = new MyVector4();
+            rv.x = lhs.x / rhs;
+            rv.y = lhs.y / rhs;
+            rv.z = lhs.z / rhs;
+            rv.w = lhs.w / rhs;
+            return rv;
+        }
+        public static MyVector4 operator /(MyVector4 lhs, float rhs)
+        {
+            return Divide(lhs, rhs);
         }
 
         //Conversion
