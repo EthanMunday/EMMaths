@@ -4,6 +4,70 @@ using UnityEngine;
 
 namespace EMMath
 {
+    public class MyVector2
+    {
+        // Members
+        public float x, y;
+        //Length
+        public float CalculateLength()
+        {
+            return Mathf.Sqrt(x * x + y * y);
+        }
+        public static float CalculateLength(MyVector2 x)
+        {
+            return x.CalculateLength();
+        }
+        //Opperators
+        public static MyVector2 AddVectors(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x + rhs.x;
+            rv.y = lhs.y + rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator +(MyVector2 lhs, MyVector2 rhs)
+        {
+            return AddVectors(lhs, rhs);
+        }
+        public static MyVector2 SubtractVectors(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x - rhs.x;
+            rv.y = lhs.y - rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator -(MyVector2 lhs, MyVector2 rhs)
+        {
+            return SubtractVectors(lhs, rhs);
+        }
+
+        //Conversion
+        public Vector2 UnityVector()
+        {
+            return new Vector2(x, y);
+        }
+        public static Vector2 UnityVector(MyVector2 x)
+        {
+            return x.UnityVector();
+        }
+
+        //Constructors
+        public MyVector2(float xIn, float yIn)
+        {
+            x = xIn;
+            y = yIn;
+        }
+        public MyVector2(Vector2 vecIn)
+        {
+            x = vecIn.x;
+            y = vecIn.y;
+        }
+        public MyVector2()
+        {
+            x = 0.0f;
+            y = 0.0f;
+        }
+    }
     public class MyVector3
     {
         // Members
