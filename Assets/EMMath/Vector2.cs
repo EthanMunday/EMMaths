@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace EMMath
 {
+    [System.Serializable]
     public class MyVector2
     {
         // Members
