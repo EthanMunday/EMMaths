@@ -85,17 +85,6 @@ namespace EMMath
         {
             return Subtract(lhs, rhs);
         }
-        public static MyVector2 Multiply(MyVector2 lhs, MyVector2 rhs)
-        {
-            MyVector2 rv = new MyVector2();
-            rv.x = lhs.x * rhs.x;
-            rv.y = lhs.y * rhs.y;
-            return rv;
-        }
-        public static MyVector2 operator *(MyVector2 lhs, MyVector2 rhs)
-        {
-            return Multiply(lhs, rhs);
-        }
         public static MyVector2 Multiply(MyVector2 lhs, float rhs)
         {
             MyVector2 rv = new MyVector2();
@@ -106,17 +95,6 @@ namespace EMMath
         public static MyVector2 operator *(MyVector2 lhs, float rhs)
         {
             return Multiply(lhs, rhs);
-        }
-        public static MyVector2 Divide(MyVector2 lhs, MyVector2 rhs)
-        {
-            MyVector2 rv = new MyVector2();
-            rv.x = lhs.x / rhs.x;
-            rv.y = lhs.y / rhs.y;
-            return rv;
-        }
-        public static MyVector2 operator /(MyVector2 lhs, MyVector2 rhs)
-        {
-            return Divide(lhs, rhs);
         }
         public static MyVector2 Divide(MyVector2 lhs, float rhs)
         {

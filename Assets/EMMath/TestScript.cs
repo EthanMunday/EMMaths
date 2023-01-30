@@ -27,14 +27,14 @@ public class TestScript : MonoBehaviour
         //Debug.Log("Vector 4: " + vector4.UnityVector() + " -3: " + (vector4 - 3).UnityVector() + " Zero: " + (vector4 - vector4).UnityVector());
 
         //Multiply Test
-        //Debug.Log("Vector 2: " + vector2.UnityVector() + " *3: " + (vector2 * 3).UnityVector() + " Sq: " + (vector2 * vector2).UnityVector());
-        //Debug.Log("Vector 3: " + vector3.UnityVector() + " *3: " + (vector3 * 3).UnityVector() + " Sq: " + (vector3 * vector3).UnityVector());
-        //Debug.Log("Vector 4: " + vector4.UnityVector() + " *3: " + (vector4 * 3).UnityVector() + " Sq: " + (vector4 * vector4).UnityVector());
+        //Debug.Log("Vector 2: " + vector2.UnityVector() + " *3: " + (vector2 * 3).UnityVector());
+        //Debug.Log("Vector 3: " + vector3.UnityVector() + " *3: " + (vector3 * 3).UnityVector());
+        //Debug.Log("Vector 4: " + vector4.UnityVector() + " *3: " + (vector4 * 3).UnityVector());
 
         //Divide Test
-        //Debug.Log("Vector 2: " + vector2.UnityVector() + " /3: " + (vector2 / 3).UnityVector() + " One: " + (vector2 / vector2).UnityVector());
-        //Debug.Log("Vector 3: " + vector3.UnityVector() + " /3: " + (vector3 / 3).UnityVector() + " One: " + (vector3 / vector3).UnityVector());
-        //Debug.Log("Vector 4: " + vector4.UnityVector() + " /3: " + (vector4 / 3).UnityVector() + " One: " + (vector4 / vector4).UnityVector());
+        //Debug.Log("Vector 2: " + vector2.UnityVector() + " /3: " + (vector2 / 3).UnityVector());
+        //Debug.Log("Vector 3: " + vector3.UnityVector() + " /3: " + (vector3 / 3).UnityVector());
+        //Debug.Log("Vector 4: " + vector4.UnityVector() + " /3: " + (vector4 / 3).UnityVector());
 
         //Length Test
         //Debug.Log("Vector 2: " + vector2.UnityVector() + " Len: " + vector2.Length() + " LenSq: " + vector2.LengthSq());
