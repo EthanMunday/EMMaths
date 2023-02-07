@@ -124,6 +124,38 @@ namespace EMMath
         {
             return x.UnityVector();
         }
+        public static float DotProduct(MyVector3 lhs, MyVector3 rhs, bool normalised = false)
+        {
+            float rv = 0.0f;
+
+            if (normalised)
+            {
+                lhs = lhs.Normalise();
+                rhs = rhs.Normalise();
+            }
+
+            rv = lhs.x * rhs.x  + lhs.y * rhs.y + lhs.z * rhs.z;
+
+            return rv;
+        }
+        public static MyVector3 EulerAnglestoDirection(MyVector3 x)
+        {
+            MyVector3 rv = new MyVector3();
+
+            rv.x = Mathf.Cos(x.y) * Mathf.Sin(x.x);
+            rv.y = Mathf.Sin(x.x);
+            rv.z = Mathf.Cos(x.x) * Mathf.Sin(x.y);
+
+            return rv;
+        }
+        public static MyVector3 CrossProduct(MyVector3 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.y * rhs.z - lhs.z * rhs.y;
+            rv.y = lhs.x * rhs.z - lhs.z * rhs.x;
+            rv.z = lhs.x * rhs.x - lhs.y * rhs.y;
+            return rv;
+        }
 
         //Constructors
         public MyVector3(float xIn, float yIn, float zIn)

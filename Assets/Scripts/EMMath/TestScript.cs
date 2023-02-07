@@ -9,6 +9,8 @@ public class TestScript : MonoBehaviour
     public MyVector3 vector3;
     public MyVector4 vector4;
 
+    private MyVector3 test;
+
     private void Start()
     {
         InvokeRepeating("Report", 0.0f, 3.0f);
@@ -45,5 +47,11 @@ public class TestScript : MonoBehaviour
         //Debug.Log("Vector 2: " + vector2.UnityVector().x + " Norm: " + vector2.Normalise().x);
         //Debug.Log("Vector 3: " + vector3.UnityVector().x + " Norm: " + vector3.Normalise().x);
         //Debug.Log("Vector 4: " + vector4.UnityVector().x + " Norm: " + vector4.Normalise().x);
+
+        //Dot Product Test
+        //Debug.Log("Vector 2: " + vector2.UnityVector().x + " Against 1: " + MyVector2.DotProduct(vector2, new MyVector2(1.0f,1.0f),true));
+        //Debug.Log("Vector 3: " + vector3.UnityVector().x + " Against 1: " + MyVector3.DotProduct(vector3, new MyVector3(1.0f, 1.0f,1.0f), true));
+        //Debug.Log("Vector 4: " + vector4.UnityVector().x + " Against 1: " + MyVector4.DotProduct(vector4, new MyVector4(1.0f, 1.0f,1.0f, 1.0f), true));
+
     }
 }

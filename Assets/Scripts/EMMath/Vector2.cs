@@ -117,6 +117,33 @@ namespace EMMath
         {
             return x.UnityVector();
         }
+        public static float DotProduct(MyVector2 lhs, MyVector2 rhs, bool normalised = false)
+        {
+            float rv = 0.0f;
+
+            if (normalised)
+            {
+                lhs = lhs.Normalise();
+                rhs = rhs.Normalise();
+            }
+
+            rv = lhs.x * rhs.x + lhs.y * rhs.y;
+
+            return rv;
+        }
+        public static float VectortoRadians(MyVector2 x)
+        {
+            return Mathf.Atan2(x.y, x.x);
+        }
+        public static MyVector2 DegreestoVector(float x, float length = 1.0f)
+        {
+            x *= (180 / Mathf.PI);
+            return new MyVector2(Mathf.Cos(x), Mathf.Sin(x)) * length;
+        }
+        public static MyVector2 RadianstoVector(float x, float length = 1.0f)
+        {
+            return new MyVector2(Mathf.Cos(x), Mathf.Sin(x)) * length;
+        }
 
         //Constructors
         public MyVector2(float xIn, float yIn)

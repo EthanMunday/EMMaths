@@ -131,6 +131,20 @@ namespace EMMath
         {
             return x.UnityVector();
         }
+        public static float DotProduct(MyVector4 lhs, MyVector4 rhs, bool normalised = false)
+        {
+            float rv = 0.0f;
+
+            if (normalised)
+            {
+                lhs = lhs.Normalise();
+                rhs = rhs.Normalise();
+            }
+
+            rv = lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z + lhs.w * rhs.w;
+
+            return rv;
+        }
 
         //Constructors
         public MyVector4(float xIn, float yIn, float zIn, float wIn)
