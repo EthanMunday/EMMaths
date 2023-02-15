@@ -138,13 +138,16 @@ namespace EMMath
 
             return rv;
         }
-        public static MyVector3 EulerAnglestoDirection(MyVector3 x)
+        public static MyVector3 EulerAnglestoDirection(MyVector3 x, bool convertToRadians = false)
         {
             MyVector3 rv = new MyVector3();
-
-            rv.x = Mathf.Cos(x.y) * Mathf.Sin(x.x);
-            rv.y = Mathf.Sin(x.x);
-            rv.z = Mathf.Cos(x.x) * Mathf.Sin(x.y);
+            if (convertToRadians)
+            {
+                x /= (180 / Mathf.PI);
+            }
+            rv.x = Mathf.Cos(x.x) * Mathf.Sin(x.y);
+            rv.y = -Mathf.Sin(x.x);
+            rv.z = Mathf.Cos(x.y) * Mathf.Cos(x.x);
 
             return rv;
         }
