@@ -161,6 +161,13 @@ namespace EMMath
             z = zIn;
             w = 0.0f;
         }
+        public MyVector4(MyVector3 vecIn)
+        {
+            x = vecIn.x;
+            y = vecIn.y;
+            z = vecIn.z;
+            w = 1.0f;
+        }
         public MyVector4(Vector4 vecIn)
         {
             x = vecIn.x;

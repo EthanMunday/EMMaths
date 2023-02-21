@@ -11,14 +11,25 @@ namespace EMMath
         public float[,] values;
 
         // Operators
-        public static Vector4 operator *(MyMatrix4x4 lhs, MyVector4 rhs)
+        public static MyVector4 operator *(MyMatrix4x4 lhs, MyVector4 rhs)
         {
-            Vector4 rv = new Vector4();
+            MyVector4 rv = new MyVector4();
 
-            rv.x = (lhs.values[0, 0] * rhs.x) + (lhs.values[1, 0] * rhs.x) + (lhs.values[2, 0] * rhs.x) + (lhs.values[3, 0] * rhs.x);
-            rv.y = (lhs.values[0, 1] * rhs.y) + (lhs.values[1, 1] * rhs.y) + (lhs.values[2, 1] * rhs.y) + (lhs.values[3, 1] * rhs.y);
-            rv.z = (lhs.values[0, 2] * rhs.z) + (lhs.values[1, 2] * rhs.z) + (lhs.values[2, 2] * rhs.z) + (lhs.values[3, 2] * rhs.z);
-            rv.w = (lhs.values[0, 3] * rhs.w) + (lhs.values[1, 3] * rhs.w) + (lhs.values[2, 3] * rhs.w) + (lhs.values[3, 3] * rhs.w);
+            rv.x = (lhs.values[0, 0] * rhs.x) + (lhs.values[1, 0] * rhs.y) + (lhs.values[2, 0] * rhs.z) + (lhs.values[3, 0] * rhs.w);
+            rv.y = (lhs.values[0, 1] * rhs.x) + (lhs.values[1, 1] * rhs.y) + (lhs.values[2, 1] * rhs.z) + (lhs.values[3, 1] * rhs.w);
+            rv.z = (lhs.values[0, 2] * rhs.x) + (lhs.values[1, 2] * rhs.y) + (lhs.values[2, 2] * rhs.z) + (lhs.values[3, 2] * rhs.w);
+            rv.w = (lhs.values[0, 3] * rhs.x) + (lhs.values[1, 3] * rhs.y) + (lhs.values[2, 3] * rhs.z) + (lhs.values[3, 3] * rhs.w);
+
+            return rv;
+        }
+
+        public static MyVector3 operator *(MyMatrix4x4 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+
+            rv.x = (lhs.values[0, 0] * rhs.x) + (lhs.values[1, 0] * rhs.y) + (lhs.values[2, 0] * rhs.z) + (lhs.values[3, 0] * 1);
+            rv.y = (lhs.values[0, 1] * rhs.x) + (lhs.values[1, 1] * rhs.y) + (lhs.values[2, 1] * rhs.z) + (lhs.values[3, 1] * 1);
+            rv.z = (lhs.values[0, 2] * rhs.x) + (lhs.values[1, 2] * rhs.y) + (lhs.values[2, 2] * rhs.z) + (lhs.values[3, 2] * 1);
 
             return rv;
         }
