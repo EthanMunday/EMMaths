@@ -96,6 +96,17 @@ namespace EMMath
         {
             return Multiply(lhs, rhs);
         }
+        public static MyVector2 Multiply(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x * rhs.x;
+            rv.y = lhs.y * rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator *(MyVector2 lhs, MyVector2 rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
         public static MyVector2 Divide(MyVector2 lhs, float rhs)
         {
             MyVector2 rv = new MyVector2();
@@ -104,6 +115,17 @@ namespace EMMath
             return rv;
         }
         public static MyVector2 operator /(MyVector2 lhs, float rhs)
+        {
+            return Divide(lhs, rhs);
+        }
+        public static MyVector2 Divide(MyVector2 lhs, MyVector2 rhs)
+        {
+            MyVector2 rv = new MyVector2();
+            rv.x = lhs.x / rhs.x;
+            rv.y = lhs.y / rhs.y;
+            return rv;
+        }
+        public static MyVector2 operator /(MyVector2 lhs, MyVector2 rhs)
         {
             return Divide(lhs, rhs);
         }
@@ -116,6 +138,10 @@ namespace EMMath
         public static Vector2 UnityVector(MyVector2 x)
         {
             return x.UnityVector();
+        }
+        public float Sum()
+        {
+            return x + y;
         }
         public static float DotProduct(MyVector2 lhs, MyVector2 rhs, bool normalised = false)
         {
@@ -144,12 +170,25 @@ namespace EMMath
         {
             return new MyVector2(Mathf.Cos(x), Mathf.Sin(x)) * length;
         }
+        public static MyVector2 Lerp(MyVector2 lhs, MyVector2 rhs, float ratio)
+        {
+            MyVector2 rv = new MyVector2();
+
+            rv = (lhs * (1 - ratio)) + (rhs * ratio);
+
+            return rv;
+        }
 
         //Constructors
         public MyVector2(float xIn, float yIn)
         {
             x = xIn;
             y = yIn;
+        }
+        public MyVector2(MyVector3 vecIn)
+        {
+            x = vecIn.x;
+            y = vecIn.y;
         }
         public MyVector2(Vector2 vecIn)
         {

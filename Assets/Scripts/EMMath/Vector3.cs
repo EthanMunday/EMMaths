@@ -102,6 +102,18 @@ namespace EMMath
         {
             return Multiply(lhs, rhs);
         }
+        public static MyVector3 Multiply(MyVector3 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x * rhs.x;
+            rv.y = lhs.y * rhs.y;
+            rv.z = lhs.z * rhs.z;
+            return rv;
+        }
+        public static MyVector3 operator *(MyVector3 lhs, MyVector3 rhs)
+        {
+            return Multiply(lhs, rhs);
+        }
         public static MyVector3 Divide(MyVector3 lhs, float rhs)
         {
             MyVector3 rv = new MyVector3();
@@ -114,6 +126,18 @@ namespace EMMath
         {
             return Divide(lhs, rhs);
         }
+        public static MyVector3 Divide(MyVector3 lhs, MyVector3 rhs)
+        {
+            MyVector3 rv = new MyVector3();
+            rv.x = lhs.x / rhs.x;
+            rv.y = lhs.y / rhs.y;
+            rv.z = lhs.z / rhs.z;
+            return rv;
+        }
+        public static MyVector3 operator /(MyVector3 lhs, MyVector3 rhs)
+        {
+            return Divide(lhs, rhs);
+        }
 
         //Conversion
         public Vector3 UnityVector()
@@ -123,6 +147,10 @@ namespace EMMath
         public static Vector3 UnityVector(MyVector3 x)
         {
             return x.UnityVector();
+        }
+        public float Sum()
+        {
+            return x + y + z;
         }
         public static float DotProduct(MyVector3 lhs, MyVector3 rhs, bool normalised = false)
         {
@@ -159,6 +187,14 @@ namespace EMMath
             rv.z = lhs.x * rhs.x - lhs.y * rhs.y;
             return rv;
         }
+        public static MyVector3 Lerp(MyVector3 lhs, MyVector3 rhs, float ratio)
+        {
+            MyVector3 rv = new MyVector3();
+
+            rv = (lhs * (1 - ratio)) + (rhs * ratio);
+
+            return rv;
+        }
 
         //Constructors
         public MyVector3(float xIn, float yIn, float zIn)
@@ -172,6 +208,18 @@ namespace EMMath
             x = xIn;
             y = yIn;
             z = 0.0f;
+        }
+        public MyVector3(MyVector2 vecIn)
+        {
+            x = vecIn.x;
+            y = vecIn.y;
+            z = 0.0f;
+        }
+        public MyVector3(MyVector4 vecIn)
+        {
+            x = vecIn.x;
+            y = vecIn.y;
+            z = vecIn.z;
         }
         public MyVector3(Vector3 vecIn)
         {
