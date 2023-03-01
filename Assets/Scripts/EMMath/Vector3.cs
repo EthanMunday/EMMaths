@@ -195,6 +195,14 @@ namespace EMMath
 
             return rv;
         }
+        public static MyVector3 RotateVertexAroundAxis(float angle, MyVector3 axis, MyVector3 vertex)
+        {
+            MyVector3 rv = (vertex * Mathf.Cos(angle)) + 
+            axis * DotProduct(vertex, axis) * (1 - Mathf.Cos(angle)) + 
+            CrossProduct(axis, vertex) * Mathf.Sin(angle);
+
+            return rv;
+        }
 
         //Constructors
         public MyVector3(float xIn, float yIn, float zIn)
