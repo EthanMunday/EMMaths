@@ -95,6 +95,10 @@ namespace EMMath
         {
             return Subtract(lhs, rhs);
         }
+        public static MyVector4 operator -(MyVector4 lhs)
+        {
+            return new MyVector4(-lhs.x, -lhs.y, -lhs.z, -lhs.w);
+        }
         public static MyVector4 Multiply(MyVector4 lhs, float rhs)
         {
             MyVector4 rv = new MyVector4();

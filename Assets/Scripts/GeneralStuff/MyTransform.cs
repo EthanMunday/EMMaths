@@ -26,10 +26,10 @@ namespace EMMath
             forward = new MyVector3(transform.forward);
             right = MyVector3.CrossProduct(new MyVector3(0, 1, 0), forward);
             up = MyVector3.CrossProduct(forward, right);
-            vertices = new MyVector3[mf.mesh.vertexCount];
+            vertices = new MyVector3[mf.sharedMesh.vertexCount];
             for (int x = 0; x < mf.mesh.vertices.Length; x++)
             {
-                vertices[x] = new MyVector3(mf.mesh.vertices[x]);
+                vertices[x] = new MyVector3(mf.sharedMesh.vertices[x]);
             }
         }
         void Update()
@@ -42,6 +42,19 @@ namespace EMMath
                     newVertices[x] = (MyMatrix4x4.TransformMatrix(position, rotation, scale) * vertices[x]).UnityVector();
                 }
                 Debug.Log(position.x + " " + position.y + " " + position.z);
+                mf.mesh.vertices = newVertices;
+                mf.mesh.RecalculateNormals();
+                mf.mesh.RecalculateBounds();
+            }
+
+            else
+            {
+                transform.position = position.UnityVector();
+                Vector3[] newVertices = new Vector3[vertices.Length];
+                for (int x = 0; x < vertices.Length; x++)
+                {
+                    newVertices[x] = (MyMatrix4x4.TransformMatrix(new MyVector3(), rotation, scale) * vertices[x]).UnityVector();
+                }
                 mf.mesh.vertices = newVertices;
                 mf.mesh.RecalculateNormals();
                 mf.mesh.RecalculateBounds();
