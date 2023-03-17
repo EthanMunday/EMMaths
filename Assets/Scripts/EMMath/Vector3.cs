@@ -160,11 +160,7 @@ namespace EMMath
         {
             float rv = 0.0f;
 
-            if (normalised)
-            {
-                lhs = lhs.Normalise();
-                rhs = rhs.Normalise();
-            }
+            
 
             rv = lhs.x * rhs.x  + lhs.y * rhs.y + lhs.z * rhs.z;
 
@@ -183,11 +179,18 @@ namespace EMMath
 
             return rv;
         }
-        public static MyVector3 CrossProduct(MyVector3 lhs, MyVector3 rhs)
+        public static MyVector3 CrossProduct(MyVector3 lhs, MyVector3 rhs, bool normalised = false)
         {
             MyVector3 rv = new MyVector3();
+
+            if (normalised)
+            {
+                lhs = lhs.Normalise();
+                rhs = rhs.Normalise();
+            }
+
             rv.x = lhs.y * rhs.z - lhs.z * rhs.y;
-            rv.y = lhs.x * rhs.z - lhs.z * rhs.x;
+            rv.y = lhs.z * rhs.x - lhs.x * rhs.z;
             rv.z = lhs.x * rhs.y - lhs.y * rhs.x;
             return rv;
         }

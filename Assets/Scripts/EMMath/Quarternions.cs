@@ -24,6 +24,12 @@ namespace EMMath
             y = axis.y;
             z = axis.z;
         }
+
+        public void NormaliseAxis()
+        {
+            SetAxis(GetAxis().Normalise());
+        }
+
         public MyVector3 GetAxis()
         {
             return new MyVector3(x, y, z);
@@ -54,12 +60,16 @@ namespace EMMath
         {
             MyQuarternion rv = new MyQuarternion();
 
+            //quat.NormaliseAxis();
+
             MyQuarternion vQuart = new MyQuarternion(vector);
 
             rv = quat * vQuart * quat.Inverse();
 
             return rv.GetAxis();
         }
+
+        
         public static MyQuarternion Slerp(MyQuarternion a, MyQuarternion b, float t)
         {
             t = Mathf.Clamp(t, 0.0f, 1.0f);
@@ -69,13 +79,18 @@ namespace EMMath
             return fractional * a;
         }
 
-        public MyQuarternion(float angle, MyVector3 axis)
+        public MyQuarternion(float angle, MyVector3 axis, bool normalised = false)
         {
             float halfAngle = angle / 2;
+            if (normalised)
+            {
+                axis = axis.Normalise();
+            }
             w = Mathf.Cos(halfAngle);
             x = axis.x * Mathf.Sin(halfAngle);
             y = axis.y * Mathf.Sin(halfAngle);
             z = axis.z * Mathf.Sin(halfAngle);
+            
         }
         public MyQuarternion(MyVector3 axis)
         {
