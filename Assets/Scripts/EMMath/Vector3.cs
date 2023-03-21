@@ -4,11 +4,20 @@ using UnityEngine;
 
 namespace EMMath
 {
+
     [System.Serializable]
     public class MyVector3
     {
         // Members
         public float x, y, z;
+
+        public static float RADIANS
+        {
+            get
+            {
+                return (180 / Mathf.PI);
+            }
+        }
 
         //Length
         public float Length()
@@ -171,7 +180,7 @@ namespace EMMath
             MyVector3 rv = new MyVector3();
             if (convertToRadians)
             {
-                x /= (180 / Mathf.PI);
+                x /= RADIANS;
             }
             rv.x = Mathf.Cos(x.x) * Mathf.Sin(x.y);
             rv.y = -Mathf.Sin(x.x);
@@ -209,6 +218,44 @@ namespace EMMath
             CrossProduct(axis, vertex) * Mathf.Sin(angle);
 
             return rv;
+        }
+        public MyQuaternion ToQuaternion(bool convertToRadians = false)
+        {
+            MyQuaternion rv = new MyQuaternion();
+
+            if (convertToRadians)
+            {
+                x /= RADIANS;
+                y /= RADIANS;
+                z /= RADIANS;
+            }
+
+            float cx, cy, cz, sx, sy, sz;
+
+            sx = Mathf.Sin(x / 2);
+            sy = Mathf.Sin(y / 2);
+            sz = Mathf.Sin(z / 2);
+            cx = Mathf.Cos(x / 2);
+            cy = Mathf.Cos(y / 2);
+            cz = Mathf.Cos(z / 2);
+
+            rv.x = cz * sx * cy + sz * cx * sy; 
+            rv.y = cz * cx * sy - sz * sx * cy;
+            rv.z = sz * cx * cy - cz * sx * sy;
+            rv.w = cz * cx * cy + sz * sx * sy;
+
+            return rv;
+        }
+        public MyMatrix4x4 ToRotationMatrix(bool convertToRadians = false)
+        {
+            if (convertToRadians)
+            {
+                x /= RADIANS;
+                y /= RADIANS;
+                z /= RADIANS;
+            }
+
+            return MyMatrix4x4.RotationMatrix(x, y, z);
         }
 
         //Constructors

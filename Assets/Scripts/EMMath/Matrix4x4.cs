@@ -153,6 +153,15 @@ namespace EMMath
             new MyVector3(-x, -y, -z));
             return rv;
         }
+        public static MyMatrix4x4 RollMatrix(float x)
+        {
+            MyMatrix4x4 rv = new MyMatrix4x4(
+            new MyVector3(Mathf.Cos(x), Mathf.Sin(x), 0),
+            new MyVector3(-Mathf.Sin(x), Mathf.Cos(x), 0),
+            new MyVector3(0, 0, 1),
+            new MyVector3(0, 0, 0));
+            return rv;
+        }
         public static MyMatrix4x4 PitchMatrix(float x)
         {
             MyMatrix4x4 rv = new MyMatrix4x4(
@@ -168,15 +177,6 @@ namespace EMMath
             new MyVector3(Mathf.Cos(x), 0, -Mathf.Sin(x)),
             new MyVector3(0, 1, 0),
             new MyVector3(Mathf.Sin(x), 0, Mathf.Cos(x)),
-            new MyVector3(0, 0, 0));
-            return rv;
-        }
-        public static MyMatrix4x4 RollMatrix(float x)
-        {
-            MyMatrix4x4 rv = new MyMatrix4x4(
-            new MyVector3(Mathf.Cos(x), Mathf.Sin(x), 0),
-            new MyVector3(-Mathf.Sin(x), Mathf.Cos(x), 0),
-            new MyVector3(0, 0, 1),
             new MyVector3(0, 0, 0));
             return rv;
         }
@@ -225,6 +225,34 @@ namespace EMMath
         public static MyMatrix4x4 TransformMatrix(MyVector3 t, MyVector3 r, MyVector3 s)
         {
             MyMatrix4x4 rv = TranslationMatrix(t.x, t.y, t.z) * RotationMatrix(r.x, r.y, r.z) * ScaleMatrix(s.x, s.y, s.z);
+            return rv;
+        }
+        public MyVector3 ToEuler()
+        {
+            MyVector3 rv = new MyVector3();
+
+            if (!(values[2,1] == 1 || values[2,1] == -1))
+            {
+                rv.x = -Mathf.Asin(values[2, 1]);
+                float cosY = Mathf.Cos(rv.y);
+                rv.z = Mathf.Atan2(values[0, 1] / cosY, values[1, 1] / cosY);
+                rv.y = Mathf.Atan2(values[2, 0] / cosY, values[2, 2] / cosY);
+            }
+            else
+            {
+                rv.z = 0;
+                if (values[2,1] == -1)
+                {
+                    rv.x = Mathf.PI / 2;
+                    rv.y = Mathf.Atan2(values[1, 0], values[1, 2]);
+                }
+                else
+                {
+                    rv.x = -Mathf.PI / 2;
+                    rv.y = Mathf.Atan2(-values[1, 0], -values[1, 2]);
+                }
+            }
+
             return rv;
         }
 

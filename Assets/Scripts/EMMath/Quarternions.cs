@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace EMMath
 {
-    public class MyQuarternion
+    public class MyQuaternion
     {
         public float w, x, y, z;
 
-        public static MyQuarternion operator * (MyQuarternion lhs, MyQuarternion rhs)
+        public static MyQuaternion operator * (MyQuaternion lhs, MyQuaternion rhs)
         {
             MyVector3 lhsAxis = lhs.GetAxis();
             MyVector3 rhsAxis = rhs.GetAxis();
-            MyQuarternion rv = new MyQuarternion();
+            MyQuaternion rv = new MyQuaternion();
             rv.w = (rhs.w * lhs.w) - MyVector3.DotProduct(rhsAxis, lhsAxis);
             rv.SetAxis((rhsAxis * lhs.w) + (lhsAxis * rhs.w) + MyVector3.CrossProduct(lhsAxis, rhsAxis));
             return rv;
@@ -47,22 +47,22 @@ namespace EMMath
 
             return rv;
         }
-        public MyQuarternion Inverse()
+        public MyQuaternion Inverse()
         {
-            MyQuarternion rv = new MyQuarternion();
+            MyQuaternion rv = new MyQuaternion();
 
             rv.w = w;
             rv.SetAxis(-GetAxis());
 
             return rv;
         }
-        public static MyVector3 RotateVector(MyQuarternion quat, MyVector3 vector)
+        public static MyVector3 RotateVector(MyQuaternion quat, MyVector3 vector)
         {
-            MyQuarternion rv = new MyQuarternion();
+            MyQuaternion rv = new MyQuaternion();
 
             //quat.NormaliseAxis();
 
-            MyQuarternion vQuart = new MyQuarternion(vector);
+            MyQuaternion vQuart = new MyQuaternion(vector);
 
             rv = quat * vQuart * quat.Inverse();
 
@@ -70,16 +70,16 @@ namespace EMMath
         }
 
         
-        public static MyQuarternion Slerp(MyQuarternion a, MyQuarternion b, float t)
+        public static MyQuaternion Slerp(MyQuaternion a, MyQuaternion b, float t)
         {
             t = Mathf.Clamp(t, 0.0f, 1.0f);
-            MyQuarternion midpoint = b * a.Inverse();
+            MyQuaternion midpoint = b * a.Inverse();
             MyVector4 axAngle = midpoint.GetAxisAngle();
-            MyQuarternion fractional = new MyQuarternion(axAngle.w * t, new MyVector3(axAngle.x, axAngle.y, axAngle.z));
+            MyQuaternion fractional = new MyQuaternion(axAngle.w * t, new MyVector3(axAngle.x, axAngle.y, axAngle.z));
             return fractional * a;
         }
 
-        public MyQuarternion(float angle, MyVector3 axis, bool normalised = false)
+        public MyQuaternion(float angle, MyVector3 axis, bool normalised = false)
         {
             float halfAngle = angle / 2;
             if (normalised)
@@ -92,14 +92,14 @@ namespace EMMath
             z = axis.z * Mathf.Sin(halfAngle);
             
         }
-        public MyQuarternion(MyVector3 axis)
+        public MyQuaternion(MyVector3 axis)
         {
             w = 0.0f;
             x = axis.x;
             y = axis.y;
             z = axis.z;
         }
-        public MyQuarternion()
+        public MyQuaternion()
         {
             w = 0.0f;
             x = 0.0f;
