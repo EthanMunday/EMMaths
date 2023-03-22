@@ -255,6 +255,45 @@ namespace EMMath
 
             return rv;
         }
+        public MyQuaternion ToQuat()
+        {
+            MyQuaternion rv = new MyQuaternion();
+            float diagonalSum = values[0, 0] + values[1, 1] + values[2, 2];
+            float quatScalar;
+            if (diagonalSum > 0.0f)
+            {
+                quatScalar = Mathf.Sqrt(diagonalSum + 1.0f);
+                rv.w = quatScalar / 2;
+                quatScalar = 0.5f / quatScalar;
+                rv.x = (values[1, 2] - values[2, 1]) * quatScalar;
+                rv.y = (values[2, 0] - values[0, 2]) * quatScalar;
+                rv.z = (values[0, 1] - values[1, 0]) * quatScalar;
+            }
+
+            else
+            {
+                int i, j, k;
+                int[] indexList = new int[3] { 1, 2, 0 };
+                float[] outputList = new float[4];
+                i = 0;
+                if (values[1, 1] > values[0, 0]) i = 1;
+                if (values[2, 2] > values[i, i]) i = 2;
+                j = indexList[i];
+                k = indexList[j];
+                quatScalar = Mathf.Sqrt((values[i, i] - (values[j, j] + values[k, k])) + 1.0f);
+                outputList[i] = quatScalar * 0.5f;
+                if (quatScalar != 0.0) quatScalar = 0.5f / quatScalar;
+                outputList[3] = (values[j, k] - values[k, j]) * quatScalar;
+                outputList[j] = (values[i, j] + values[j, i]) * quatScalar;
+                outputList[k] = (values[i, k] + values[k, i]) * quatScalar;
+                rv.x = outputList[0];
+                rv.y = outputList[1];
+                rv.z = outputList[2];
+                rv.w = outputList[3];
+            }
+
+            return rv;
+        }
 
         // Constructors
         public MyMatrix4x4(MyVector4 x, MyVector4 y, MyVector4 z, MyVector4 w)

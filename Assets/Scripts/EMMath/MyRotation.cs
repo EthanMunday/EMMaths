@@ -21,6 +21,20 @@ namespace EMMath
             quaternion = euler.ToQuaternion();
         }
 
+        public void UpdatefromEuler()
+        {
+            angle = euler * MyVector3.RADIANS;
+            matrix = MyMatrix4x4.RotationMatrix(euler.x, euler.y, euler.z);
+            quaternion = euler.ToQuaternion();
+        }
+
+        public void UpdatefromMatrix()
+        {
+            euler = matrix.ToEuler();
+            angle = euler * MyVector3.RADIANS;
+            quaternion = matrix.ToQuat();
+        }
+
         public void SetAngle(MyVector3 eulerIn)
         {
             angle = eulerIn * MyVector3.RADIANS;
