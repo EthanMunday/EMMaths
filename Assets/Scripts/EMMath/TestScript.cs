@@ -9,12 +9,12 @@ public class TestScript : MonoBehaviour
     public MyVector3 vector3;
     public MyVector4 vector4;
     private MyRotation rotation;
-    private MyQuaternion quat;
+    private MyVector3 euler;
 
     private void Start()
     {
         rotation = new MyRotation(vector3);
-        quat = rotation.matrix.ToQuat();
+        euler = rotation.quaternion.ToEuler();
         InvokeRepeating("Report", 0.0f, 3.0f);
     }
 
@@ -55,9 +55,9 @@ public class TestScript : MonoBehaviour
         //Debug.Log("Vector 3: " + vector3.UnityVector().x + " Against 1: " + MyVector3.DotProduct(vector3, new MyVector3(1.0f, 1.0f,1.0f), true));
         //Debug.Log("Vector 4: " + vector4.UnityVector().x + " Against 1: " + MyVector4.DotProduct(vector4, new MyVector4(1.0f, 1.0f,1.0f, 1.0f), true));
 
-        Debug.Log(quat.w);
-        Debug.Log(quat.x);
-        Debug.Log(quat.y);
-        Debug.Log(quat.z);
+        Debug.Log(euler.x);
+        Debug.Log(euler.y);
+        Debug.Log(euler.z);
+        Debug.Log(euler.z);
     }
 }

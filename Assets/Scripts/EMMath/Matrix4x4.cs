@@ -227,6 +227,11 @@ namespace EMMath
             MyMatrix4x4 rv = TranslationMatrix(t.x, t.y, t.z) * RotationMatrix(r.x, r.y, r.z) * ScaleMatrix(s.x, s.y, s.z);
             return rv;
         }
+        public static MyMatrix4x4 TransformMatrix(MyVector3 t, MyRotation r, MyVector3 s)
+        {
+            MyMatrix4x4 rv = TranslationMatrix(t.x, t.y, t.z) * r.matrix * ScaleMatrix(s.x, s.y, s.z);
+            return rv;
+        }
         public MyVector3 ToEuler()
         {
             MyVector3 rv = new MyVector3();

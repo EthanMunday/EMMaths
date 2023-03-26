@@ -159,9 +159,9 @@ MonoBehaviour:
     x: 1
     y: 1
   vector3:
-    x: 19.471222
-    y: 45
-    z: 135
+    x: 90
+    y: 90
+    z: 90
   vector4:
     x: 1
     y: 1

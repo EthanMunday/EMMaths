@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace EMMath
 {
-    [ExecuteInEditMode]
     public class MyTransform : MonoBehaviour
     {
         // Members
         public MyVector3 position;
-        public MyVector3 rotation;
+        public MyRotation rotation;
         public MyVector3 scale;
 
         private MeshFilter mf;
@@ -34,31 +33,15 @@ namespace EMMath
         }
         void Update()
         {
-            if (Application.isPlaying)
+            Vector3[] newVertices = new Vector3[vertices.Length];
+            for (int x = 0; x < vertices.Length; x++)
             {
-                Vector3[] newVertices = new Vector3[vertices.Length];
-                for (int x = 0; x < vertices.Length; x++)
-                {
-                    newVertices[x] = (MyMatrix4x4.TransformMatrix(position, rotation, scale) * vertices[x]).UnityVector();
-                }
-                Debug.Log(position.x + " " + position.y + " " + position.z);
-                mf.mesh.vertices = newVertices;
-                mf.mesh.RecalculateNormals();
-                mf.mesh.RecalculateBounds();
+                newVertices[x] = (MyMatrix4x4.TransformMatrix(position, rotation.angle, scale) * vertices[x]).UnityVector();
             }
-
-            else
-            {
-                transform.position = position.UnityVector();
-                Vector3[] newVertices = new Vector3[vertices.Length];
-                for (int x = 0; x < vertices.Length; x++)
-                {
-                    newVertices[x] = (MyMatrix4x4.TransformMatrix(new MyVector3(), rotation, scale) * vertices[x]).UnityVector();
-                }
-                mf.mesh.vertices = newVertices;
-                mf.mesh.RecalculateNormals();
-                mf.mesh.RecalculateBounds();
-            }
+            Debug.Log(position.x + " " + position.y + " " + position.z);
+            mf.mesh.vertices = newVertices;
+            mf.mesh.RecalculateNormals();
+            mf.mesh.RecalculateBounds();
         }
 
         // Transformers
@@ -77,15 +60,15 @@ namespace EMMath
 
         public void Rotate(float x, float y, float z)
         {
-            rotation += new MyVector3(x, y, z);
+            rotation.matrix += new MyVector3(x, y, z).ToRotationMatrix();
         }
         public void Rotate(Vector3 x)
         {
-            rotation += new MyVector3(x);
+            rotation.matrix += new MyVector3(x).ToRotationMatrix();
         }
         public void Rotate(MyVector3 x)
         {
-            rotation += x;
+            rotation.matrix += x.ToRotationMatrix();
         }
 
         public void Scale(float x, float y, float z)
