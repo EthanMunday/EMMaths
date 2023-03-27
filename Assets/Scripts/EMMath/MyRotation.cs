@@ -4,44 +4,46 @@ using UnityEngine;
 
 namespace EMMath
 {
+    [System.Serializable]
     public class MyRotation
     {
         public MyVector3 angle;
-        [HideInInspector]
         public MyVector3 euler;
-        [HideInInspector]
         public MyMatrix4x4 matrix;
-        [HideInInspector]
         public MyQuaternion quaternion;
 
         public void UpdateFromAngle()
         {
             euler = angle / MyVector3.RADIANS;
-            matrix = MyMatrix4x4.RotationMatrix(euler.x, euler.y, euler.z);
+            matrix = MyMatrix4x4.RotationMatrix(angle.x, angle.y, angle.z);
             quaternion = euler.ToQuaternion();
         }
         public void UpdatefromEuler()
         {
             angle = euler * MyVector3.RADIANS;
-            matrix = MyMatrix4x4.RotationMatrix(euler.x, euler.y, euler.z);
+            matrix = MyMatrix4x4.RotationMatrix(angle.x, angle.y, angle.z);
             quaternion = euler.ToQuaternion();
+            if (AngleClampCheck()) UpdateFromAngle();
         }
         public void UpdatefromMatrix()
         {
             euler = matrix.ToEuler();
             angle = euler * MyVector3.RADIANS;
             quaternion = matrix.ToQuat();
+            if (AngleClampCheck()) UpdateFromAngle();
         }
         public void UpdatefromQuat()
         {
             euler = quaternion.ToEuler();
             angle = euler * MyVector3.RADIANS;
             matrix = quaternion.ToMatrix();
+            if (AngleClampCheck()) UpdateFromAngle();
         }
 
-        public void SetAngle(MyVector3 eulerIn)
+        public void SetAngle(MyVector3 angleIn)
         {
-            angle = eulerIn * MyVector3.RADIANS;
+            angle = angleIn;
+            AngleClampCheck();
             UpdateFromAngle();
         }
         public void SetEuler(MyVector3 eulerIn)
@@ -59,9 +61,9 @@ namespace EMMath
             quaternion = quatIn;
             UpdatefromQuat();
         }
-        public void AddAngle(MyVector3 eulerIn)
+        public void AddAngle(MyVector3 angleIn)
         {
-            angle += eulerIn * MyVector3.RADIANS;
+            angle += angleIn;
             UpdateFromAngle();
         }
         public void AddEuler(MyVector3 eulerIn)
@@ -73,6 +75,43 @@ namespace EMMath
         {
             matrix += matrixIn;
             UpdatefromMatrix();
+        }
+
+        public bool AngleClampCheck()
+        {
+            bool isDirty = false;
+            if (angle.x < 0.0f)
+            {
+                angle.x += 360.0f;
+                isDirty = true;
+            }
+            if (angle.y < 0.0f)
+            {
+                angle.y += 360.0f;
+                isDirty = true;
+            }
+            if (angle.z < 0.0f)
+            {
+                angle.z += 360.0f;
+                isDirty = true;
+            }
+
+            if (angle.x > 360.0f)
+            {
+                angle.x -= 360.0f;
+                isDirty = true;
+            }
+            if (angle.y > 360.0f)
+            {
+                angle.y -= 360.0f;
+                isDirty = true;
+            }
+            if (angle.z > 360.0f)
+            {
+                angle.z -= 360.0f;
+                isDirty = true;
+            }
+            return isDirty;
         }
 
         public MyRotation()

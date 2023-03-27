@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace EMMath
 {
+    [System.Serializable]
     public class MyQuaternion
     {
         public float w, x, y, z;

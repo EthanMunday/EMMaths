@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace EMMath
 {
-    [System.Serializable]
     public class MyMatrix4x4
     {
         // Members

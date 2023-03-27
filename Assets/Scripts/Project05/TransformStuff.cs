@@ -19,7 +19,7 @@ public class TransformStuff : MonoBehaviour
     {
         change += Time.deltaTime;
         myTransform.position += new MyVector3(Mathf.Sin(change * 2) * 3, 0.0f, 0.0f) * Time.deltaTime;
-        myTransform.rotation += new MyVector3(1.0f,1.0f,1.0f) * Time.deltaTime;
+        myTransform.rotation.AddEuler(new MyVector3(-1.0f,2.0f,-0.3f) * Time.deltaTime);
         myTransform.scale += new MyVector3(Mathf.Sin(change * 3), Mathf.Sin(change * 3), Mathf.Sin(change * 3)) * Time.deltaTime;
     }
 }
