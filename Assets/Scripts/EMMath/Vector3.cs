@@ -177,7 +177,7 @@ namespace EMMath
         }
         public static MyVector3 EulerAnglestoDirection(MyVector3 x, bool convertToRadians = false)
         {
-            MyVector3 rv = new MyVector3();
+            MyVector3 rv = new();
             if (convertToRadians)
             {
                 x /= RADIANS;
@@ -256,6 +256,63 @@ namespace EMMath
             }
 
             return MyMatrix4x4.RotationMatrix(x, y, z);
+        }
+
+        // Events
+        public bool EpsilonFixer()
+        {
+            bool isDirty = false;
+            if (x < 0.000001)
+            { 
+                x = 0.0f;
+                isDirty = true;
+            }
+            if (y < 0.000001)
+            {
+                y = 0.0f;
+                isDirty = true;
+            }
+            if (z < 0.000001)
+            {
+                z = 0.0f;
+                isDirty = true;
+            }
+            return isDirty;
+        }
+        public bool AngleClamp()
+        {
+            bool isDirty = false;
+            if (x < 0.0f)
+            {
+                x += 360.0f;
+                isDirty = true;
+            }
+            if (y < 0.0f)
+            {
+                y += 360.0f;
+                isDirty = true;
+            }
+            if (z < 0.0f)
+            {
+                z += 360.0f;
+                isDirty = true;
+            }
+            if (x > 360.0f)
+            {
+                x -= 360.0f;
+                isDirty = true;
+            }
+            if (y > 360.0f)
+            {
+                y -= 360.0f;
+                isDirty = true;
+            }
+            if (z > 360.0f)
+            {
+                z -= 360.0f;
+                isDirty = true;
+            }
+            return isDirty;
         }
 
         //Constructors

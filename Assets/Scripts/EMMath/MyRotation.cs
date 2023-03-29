@@ -23,27 +23,27 @@ namespace EMMath
             angle = euler * MyVector3.RADIANS;
             matrix = MyMatrix4x4.RotationMatrix(angle.x, angle.y, angle.z);
             quaternion = euler.ToQuaternion();
-            if (AngleClampCheck()) UpdateFromAngle();
+            if (angle.AngleClamp()) UpdateFromAngle();
         }
         public void UpdatefromMatrix()
         {
             euler = matrix.ToEuler();
             angle = euler * MyVector3.RADIANS;
             quaternion = matrix.ToQuat();
-            if (AngleClampCheck()) UpdateFromAngle();
+            if (angle.AngleClamp()) UpdateFromAngle();
         }
         public void UpdatefromQuat()
         {
             euler = quaternion.ToEuler();
             angle = euler * MyVector3.RADIANS;
             matrix = quaternion.ToMatrix();
-            if (AngleClampCheck()) UpdateFromAngle();
+            if (angle.AngleClamp()) UpdateFromAngle();
         }
 
         public void SetAngle(MyVector3 angleIn)
         {
             angle = angleIn;
-            AngleClampCheck();
+            angle.AngleClamp();
             UpdateFromAngle();
         }
         public void SetEuler(MyVector3 eulerIn)
@@ -75,43 +75,6 @@ namespace EMMath
         {
             matrix += matrixIn;
             UpdatefromMatrix();
-        }
-
-        public bool AngleClampCheck()
-        {
-            bool isDirty = false;
-            if (angle.x < 0.0f)
-            {
-                angle.x += 360.0f;
-                isDirty = true;
-            }
-            if (angle.y < 0.0f)
-            {
-                angle.y += 360.0f;
-                isDirty = true;
-            }
-            if (angle.z < 0.0f)
-            {
-                angle.z += 360.0f;
-                isDirty = true;
-            }
-
-            if (angle.x > 360.0f)
-            {
-                angle.x -= 360.0f;
-                isDirty = true;
-            }
-            if (angle.y > 360.0f)
-            {
-                angle.y -= 360.0f;
-                isDirty = true;
-            }
-            if (angle.z > 360.0f)
-            {
-                angle.z -= 360.0f;
-                isDirty = true;
-            }
-            return isDirty;
         }
 
         public MyRotation()

@@ -14,6 +14,7 @@ namespace EMMath
         private MeshFilter mf;
         private MeshRenderer mr;
         private MyVector3[] vertices;
+        private Vector3[] newVertices;
         private MyVector3 forward;
         private MyVector3 up;
         private MyVector3 right;
@@ -26,6 +27,7 @@ namespace EMMath
             right = MyVector3.CrossProduct(new MyVector3(0, 1, 0), forward);
             up = MyVector3.CrossProduct(forward, right);
             vertices = new MyVector3[mf.mesh.vertexCount];
+            newVertices = new Vector3[vertices.Length];
             for (int x = 0; x < mf.mesh.vertices.Length; x++)
             {
                 vertices[x] = new MyVector3(mf.mesh.vertices[x]);
@@ -33,12 +35,10 @@ namespace EMMath
         }
         void Update()
         {
-            Vector3[] newVertices = new Vector3[vertices.Length];
             for (int x = 0; x < vertices.Length; x++)
             {
                 newVertices[x] = (MyMatrix4x4.TransformMatrix(position, rotation.euler, scale) * vertices[x]).UnityVector();
             }
-            Debug.Log(position.x + " " + position.y + " " + position.z);
             mf.mesh.vertices = newVertices;
             mf.mesh.RecalculateNormals();
             mf.mesh.RecalculateBounds();
@@ -48,14 +48,18 @@ namespace EMMath
         public void Move(float x, float y, float z)
         {
             position += new MyVector3(x, y, z);
+            position.EpsilonFixer();
         }
         public void Move(Vector3 x)
         {
             position += new MyVector3(x);
+            position.EpsilonFixer();
+
         }
         public void Move(MyVector3 x)
         {
             position += x;
+            position.EpsilonFixer();
         }
 
         public void Rotate(float x, float y, float z)
