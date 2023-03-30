@@ -24,7 +24,6 @@ public class Orbit : MonoBehaviour
     {
         progress *= 2 * Mathf.PI;
         MyVector3 axisStart = MyVector3.EulerAnglestoDirection(axis, true) * radius;
-        Debug.Log(axisStart.x + " " + axisStart.z);
         return location + MyQuaternion.RotateVector(new MyQuaternion(progress, axis, true), axisStart);
     }
 

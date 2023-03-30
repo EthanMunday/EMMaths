@@ -188,6 +188,17 @@ namespace EMMath
 
             return rv;
         }
+        public static MyMatrix4x4 LookAt(MyVector3 position, MyVector3 target)
+        {
+            MyVector3 newForward = -(position - target);
+            MyVector3 newRight = CrossProduct(new MyVector3(0, 1, 0), newForward);
+            MyVector3 newUp = CrossProduct(newForward, newRight);
+            return new MyMatrix4x4(
+                new MyVector4(newRight.x, newRight.y, newRight.z,0),
+                new MyVector4(newUp.x, newUp.y, newUp.z,0),
+                new MyVector4(newForward.x, newForward.y, newForward.z,0),
+                new MyVector4(0,0,0,1));
+        }
         public static MyVector3 CrossProduct(MyVector3 lhs, MyVector3 rhs, bool normalised = false)
         {
             MyVector3 rv = new MyVector3();

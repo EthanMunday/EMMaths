@@ -7,6 +7,7 @@ public class GalacticBody : MonoBehaviour
 {
     public MyTransform myTransform;
     public Orbit orbit;
+    public int orbitIndex;
     public float years;
     public float yearsPerMinute;
 
@@ -15,6 +16,7 @@ public class GalacticBody : MonoBehaviour
         myTransform = gameObject.GetComponent<MyTransform>();
         if (orbit != null)
         {
+            orbit = orbit.gameObject.GetComponents<Orbit>()[orbitIndex];
             myTransform.position = orbit.GetOrbitPosition(0);
         }
     }

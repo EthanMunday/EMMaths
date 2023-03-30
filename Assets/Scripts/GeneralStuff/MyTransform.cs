@@ -12,7 +12,8 @@ namespace EMMath
         public MyVector3 scale;
 
         private MeshFilter mf;
-        private MeshRenderer mr;
+        private bool hasMesh = false;
+        private MyMatrix4x4 transformMatrix;
         private MyVector3[] vertices;
         private Vector3[] newVertices;
         private MyVector3 forward;
@@ -23,25 +24,41 @@ namespace EMMath
         void Start()
         {
             mf = gameObject.GetComponent<MeshFilter>();
+            position = new MyVector3(transform.position);
+            transformMatrix = new MyMatrix4x4();
             forward = new MyVector3(transform.forward);
             right = MyVector3.CrossProduct(new MyVector3(0, 1, 0), forward);
             up = MyVector3.CrossProduct(forward, right);
-            vertices = new MyVector3[mf.mesh.vertexCount];
-            newVertices = new Vector3[vertices.Length];
-            for (int x = 0; x < mf.mesh.vertices.Length; x++)
+            if (mf != null)
             {
-                vertices[x] = new MyVector3(mf.mesh.vertices[x]);
+                hasMesh = true;
+                vertices = new MyVector3[mf.mesh.vertexCount];
+                newVertices = new Vector3[vertices.Length];
+                for (int x = 0; x < mf.mesh.vertices.Length; x++)
+                {
+                    vertices[x] = new MyVector3(mf.mesh.vertices[x]);
+                }
             }
         }
         void Update()
         {
-            for (int x = 0; x < vertices.Length; x++)
+            if (hasMesh)
             {
-                newVertices[x] = (MyMatrix4x4.TransformMatrix(position, rotation.euler, scale) * vertices[x]).UnityVector();
+                transformMatrix = MyMatrix4x4.TransformMatrix(position, rotation.euler, scale);
+                for (int x = 0; x < vertices.Length; x++)
+                {
+                    newVertices[x] = (transformMatrix * vertices[x]).UnityVector();
+                }
+                mf.mesh.vertices = newVertices;
+                mf.mesh.RecalculateNormals();
+                mf.mesh.RecalculateBounds();
             }
-            mf.mesh.vertices = newVertices;
-            mf.mesh.RecalculateNormals();
-            mf.mesh.RecalculateBounds();
+            else
+            {
+                transform.position = position.UnityVector();
+                transform.rotation = new Quaternion(rotation.quaternion.x, rotation.quaternion.y, rotation.quaternion.z, rotation.quaternion.w);
+                transform.lossyScale.Set(scale.x,scale.y,scale.z);
+            }
         }
 
         // Transformers
@@ -86,13 +103,6 @@ namespace EMMath
         public void Scale(MyVector3 x)
         {
             position += x;
-        }
-
-        public MyTransform()
-        {
-            position = new MyVector3(0, 0, 0);
-            rotation = new MyRotation();
-            scale = new MyVector3(1, 1, 1);
         }
     }
 }
