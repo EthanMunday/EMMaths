@@ -26,10 +26,11 @@ public class MyCamera : MonoBehaviour
             MyVector3 relativeDistance = myTransform.position - targetPosition;
             MyVector3 yRotation = new MyVector3(0, Input.GetAxis("Mouse X"), 0);
             MyVector3 newPosition = MyQuaternion.RotateVector(new MyQuaternion(0.03f, yRotation), relativeDistance);
-            newPosition.y += Input.GetAxis("Mouse Y");
+            newPosition.y += -Input.GetAxis("Mouse Y") * (distance / 30);
             distance = Mathf.Clamp(distance - Input.mouseScrollDelta.y, 1.0f, 100.0f);
-            newPosition.y = Mathf.Clamp(newPosition.y, -0.8f * distance, 0.8f * distance);
-            myTransform.position = newPosition.Normalise() * distance;
+            float yModifier = Mathf.Cos((relativeDistance.y * relativeDistance.y) / (distance * distance));
+            newPosition.y = Mathf.Clamp(newPosition.y, -0.5f * distance, 0.5f * distance);
+            myTransform.position = newPosition.Normalise() * (distance * yModifier);
         }
         myTransform.rotation.SetMatrix(MyVector3.LookAt(myTransform.position.Normalise(),targetPosition));
     }
