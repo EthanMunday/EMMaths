@@ -5,18 +5,49 @@ using EMMath;
 
 public class Orbit : MonoBehaviour
 {
-    public float radius;
-    public MyVector3 axis;
-    public MyVector3 location;
+    public float radius = 0.0f;
+    public MyVector3 axis = new MyVector3(0.0f, 90.0f, 0.0f);
+    public MyTransform myTransform;
     [HideInInspector] public GalacticBody body;
-    [HideInInspector] public bool hasBody;
+    [HideInInspector] public bool hasBody = false;
+    private LineRenderer gizmoUI;
 
     private void Start()
     {
-        body = GetComponent<GalacticBody>();
+        myTransform = GetComponent<MyTransform>();
+        gizmoUI = GetComponent<LineRenderer>();
         if (body != null)
         {
             hasBody = true;
+        }
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    GalacticBody newBody = CreateBody(Random.Range(5f,20f));
+        //    Orbit newOrbit = newBody.CreateOrbit(7f, new MyVector3(Random.Range(-90, 90f), 90f, Random.Range(-90, 90f)));
+        //    int moons = Random.Range(1, 5);
+        //    float moonspeed = Random.Range(60, 100f);
+        //    for (int x = 0; x < moons; x++)
+        //    {
+        //        GalacticBody newBody2 = newOrbit.CreateBody(moonspeed);
+        //        newBody2.years = (1.0f / moons) * x;
+        //    }
+        //}
+
+        if (hasBody)
+        {
+            myTransform.position = body.myTransform.position;
+        }
+        axis.AngleClamp();
+
+        gizmoUI.positionCount = Mathf.Clamp(((int)radius) * 10, 20, ((int)radius) * 10);
+        for (int x = 0; x < gizmoUI.positionCount; x++)
+        {
+            float radians = ((float)x / gizmoUI.positionCount);
+            gizmoUI.SetPosition(x, (GetOrbitPosition(radians)).UnityVector());
         }
     }
 
@@ -24,32 +55,24 @@ public class Orbit : MonoBehaviour
     {
         progress *= 2 * Mathf.PI;
         MyVector3 axisStart = MyVector3.EulerAnglestoDirection(axis, true) * radius;
-        return location + MyQuaternion.RotateVector(new MyQuaternion(progress, axis, true), axisStart);
+        return myTransform.position + MyQuaternion.RotateVector(new MyQuaternion(progress, axis, true), axisStart);
     }
 
-    public Orbit(GalacticBody inBody, MyVector3 inAxis, float inRadius = 1.0f, float inSpeed = 10.0f)
+    public void SetBody(GalacticBody newBody)
     {
-        body = inBody;
-        location = body.myTransform.position;
-        axis = inAxis;
-        radius = inRadius;
+        myTransform = GetComponent<MyTransform>();
+        gizmoUI = GetComponent<LineRenderer>();
         hasBody = true;
-
-    }
-    public Orbit(MyVector3 inLocation, MyVector3 inAxis, float inRadius = 1.0f, float inSpeed = 10.0f)
-    {
-        location = inLocation;
-        axis = inAxis;
-        radius = inRadius;
-        hasBody = false;
+        body = newBody;
+        radius = 5.0f;
     }
 
-    private void Update()
+    public GalacticBody CreateBody(float inYearsPerMinute)
     {
-        if (hasBody)
-        {
-            location = body.myTransform.position;
-        }
-        axis.AngleClamp();
+        GameObject newObject = Instantiate(Resources.Load("Planet")) as GameObject;
+        GalacticBody newBody = newObject.GetComponent<GalacticBody>();
+        newBody.SetOrbit(this);
+        newBody.yearsPerMinute = inYearsPerMinute;
+        return newBody;
     }
 }
