@@ -9,8 +9,10 @@ public class MyCamera : MonoBehaviour
     private GameObject target;
     private MyVector3 targetPosition;
     private float distance = 20.0f;
-    private bool isMoving;
-    
+    private bool hasTarget = false;
+    private RaycastHit hitObject;
+    private float lerpTimer = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,24 @@ public class MyCamera : MonoBehaviour
             newPosition.y = Mathf.Clamp(newPosition.y, -0.5f * distance, 0.5f * distance);
             myTransform.position = newPosition.Normalise() * (distance * yModifier);
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(myRay, out hitObject))
+            {
+                Debug.Log(hitObject);
+            }
+            else
+            {
+
+            }
+        }
+        if (hasTarget)
+        {
+            targetPosition = MyVector3.Lerp(targetPosition, target.GetComponent<MyTransform>().position, lerpTimer);
+            lerpTimer -= Time.deltaTime;
+        }    
         myTransform.rotation.SetMatrix(MyVector3.LookAt(myTransform.position.Normalise(),targetPosition));
     }
 }

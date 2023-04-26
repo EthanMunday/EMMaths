@@ -5,15 +5,21 @@ using EMMath;
 
 public class GalacticBody : MonoBehaviour
 {
-    [HideInInspector] public MyTransform myTransform;
-    [HideInInspector] public Orbit orbit;
-    [HideInInspector] public float years;
+    public MyTransform myTransform;
+    public Orbit orbit;
+    public float years;
+    public float size;
     public float yearsPerMinute;
+    public MyVector3 rotationAxis;
+    public float rotationScale;
     private bool hasOrbit = false;
 
     void Start()
     {
         myTransform = gameObject.GetComponent<MyTransform>();
+        rotationScale = 1;
+        size = 1;
+        rotationAxis = new MyVector3(0f, 90f, 0f);
         if (orbit != null)
         {
             hasOrbit = true;
@@ -26,7 +32,7 @@ public class GalacticBody : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.I))
         //{
-        //    CreateOrbit(Random.Range(2f,70f), new MyVector3(Random.Range(-90, 90f), 90f, Random.Range(-90, 90f)));
+        //    CreateOrbit(Random.Range(2f, 70f), new MyVector3(Random.Range(-90, 90f), 90f, 0f));
         //}
 
         if (hasOrbit)
@@ -34,6 +40,8 @@ public class GalacticBody : MonoBehaviour
             years += yearsPerMinute / 60 * Time.deltaTime;
             myTransform.position = orbit.GetOrbitPosition(years);
         }
+        myTransform.rotation.AddAngle(rotationAxis * rotationScale * Time.deltaTime);
+        myTransform.scale = new MyVector3(size, size, size);
     }
 
     public void SetOrbit(Orbit newOrbit)

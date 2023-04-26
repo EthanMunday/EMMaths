@@ -26,8 +26,8 @@ public class Orbit : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.J))
         //{
-        //    GalacticBody newBody = CreateBody(Random.Range(5f,20f));
-        //    Orbit newOrbit = newBody.CreateOrbit(7f, new MyVector3(Random.Range(-90, 90f), 90f, Random.Range(-90, 90f)));
+        //    GalacticBody newBody = CreateBody(Random.Range(5f, 20f));
+        //    Orbit newOrbit = newBody.CreateOrbit(7f, new MyVector3(Random.Range(-90, 90f), 90f,0f));
         //    int moons = Random.Range(1, 5);
         //    float moonspeed = Random.Range(60, 100f);
         //    for (int x = 0; x < moons; x++)

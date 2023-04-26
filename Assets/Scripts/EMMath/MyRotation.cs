@@ -64,6 +64,7 @@ namespace EMMath
         public void AddAngle(MyVector3 angleIn)
         {
             angle += angleIn;
+            angle.AngleClamp();
             UpdateFromAngle();
         }
         public void AddEuler(MyVector3 eulerIn)
@@ -75,6 +76,11 @@ namespace EMMath
         {
             matrix += matrixIn;
             UpdatefromMatrix();
+        }
+        public void AddQuat(MyQuaternion quaternionIn)
+        {
+            quaternion *= quaternionIn;
+            UpdatefromQuat();
         }
 
         public MyRotation()
