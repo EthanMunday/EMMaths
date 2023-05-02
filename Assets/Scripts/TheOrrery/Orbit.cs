@@ -6,7 +6,7 @@ using EMMath;
 public class Orbit : MonoBehaviour
 {
     public float radius = 0.0f;
-    public MyVector3 axis = new MyVector3(0.0f, 90.0f, 0.0f);
+    public MyVector3 axis;
     public MyTransform myTransform;
     [HideInInspector] public GalacticBody body;
     [HideInInspector] public bool hasBody = false;
@@ -42,6 +42,12 @@ public class Orbit : MonoBehaviour
             myTransform.position = body.myTransform.position;
         }
         axis.AngleClamp();
+
+        MyVector3 testAxis = new MyVector3(0f, 0f, 0f);
+        if (axis == testAxis)
+        {
+            axis = new MyVector3(0f, 90f, 0f);
+        }
 
         gizmoUI.positionCount = Mathf.Clamp(((int)radius) * 10, 20, ((int)radius) * 10);
         for (int x = 0; x < gizmoUI.positionCount; x++)

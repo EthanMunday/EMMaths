@@ -40,7 +40,9 @@ public class GalacticBody : MonoBehaviour
             years += yearsPerMinute / 60 * Time.deltaTime;
             myTransform.position = orbit.GetOrbitPosition(years);
         }
-        myTransform.rotation.AddAngle(rotationAxis * rotationScale * Time.deltaTime);
+        
+        MyVector3 newRotation = MyQuaternion.RotateVector(rotationAxis.ToQuaternion(),new MyVector3(0f, 90f, 0f));
+        myTransform.rotation.AddAngle(newRotation * rotationScale * Time.deltaTime);
         myTransform.scale = new MyVector3(size, size, size);
     }
 

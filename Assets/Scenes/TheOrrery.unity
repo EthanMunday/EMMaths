@@ -360,6 +360,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet
       objectReference: {fileID: 0}
+    - target: {fileID: 7655878917528771994, guid: b9ae89506ea40aa49a90ba74720676eb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7655878917528771999, guid: b9ae89506ea40aa49a90ba74720676eb, type: 3}
       propertyPath: m_RootOrder
       value: 2

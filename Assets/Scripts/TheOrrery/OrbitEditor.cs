@@ -11,7 +11,12 @@ public class OrbitEditor : Editor
     {
         Orbit thisOrbit = (Orbit)target;
         thisOrbit.radius = EditorGUILayout.FloatField("Radius", thisOrbit.radius);
-        thisOrbit.axis = new MyVector3(EditorGUILayout.Vector3Field("Rotation Axis", thisOrbit.axis.UnityVector()));
+        MyVector3 newAxis = new MyVector3(EditorGUILayout.Vector3Field("Rotation Axis", thisOrbit.axis.UnityVector()));
+        if(newAxis.x != 0f || newAxis.y != 0f || newAxis.z != 0f)
+        {
+            thisOrbit.axis = newAxis;
+        }
+
         if (GUILayout.Button("Create Planet"))
         {
             thisOrbit.CreateBody(Random.Range(5f, 20f));

@@ -12,7 +12,11 @@ public class GalacticBodyEditor : Editor
         GalacticBody body = (GalacticBody)target;
         body.yearsPerMinute = EditorGUILayout.FloatField("Years Per Minute", body.yearsPerMinute);
         body.size = EditorGUILayout.FloatField("Size", body.size);
-        body.rotationAxis = new MyVector3(EditorGUILayout.Vector3Field("Rotation Axis", body.rotationAxis.UnityVector()));
+        MyVector3 newAxis = new MyVector3(EditorGUILayout.Vector3Field("Rotation Axis", body.rotationAxis.UnityVector()));
+        if (newAxis.x != 0 || newAxis.y != 0 || newAxis.z != 0)
+        {
+            body.rotationAxis = newAxis;
+        }
         body.rotationScale = EditorGUILayout.FloatField("Rotation Scale", body.rotationScale);
         if (GUILayout.Button("Create Orbit"))
         {
