@@ -26,6 +26,7 @@ namespace EMMath
             mf = gameObject.GetComponent<MeshFilter>();
             position = new MyVector3(transform.position);
             transformMatrix = new MyMatrix4x4();
+            scale = new MyVector3(transform.lossyScale);
             forward = new MyVector3(transform.forward);
             right = MyVector3.CrossProduct(new MyVector3(0, 1, 0), forward);
             up = MyVector3.CrossProduct(forward, right);
