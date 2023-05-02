@@ -7,16 +7,21 @@ public class GalacticBody : MonoBehaviour
 {
     public MyTransform myTransform;
     public Orbit orbit;
+    public MySphereCollision collision;
+    public List<GameObject> colliders;
     public float years;
     public float size;
     public float yearsPerMinute;
     public MyVector3 rotationAxis;
     public float rotationScale;
     private bool hasOrbit = false;
+    private bool blowUp = false;
 
     void Start()
     {
         myTransform = gameObject.GetComponent<MyTransform>();
+        collision = gameObject.GetComponent<MySphereCollision>();
+        colliders = new List<GameObject>();
         rotationScale = 1;
         size = 1;
         rotationAxis = new MyVector3(0f, 90f, 0f);
@@ -30,10 +35,17 @@ public class GalacticBody : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    CreateOrbit(Random.Range(2f, 70f), new MyVector3(Random.Range(-90, 90f), 90f, 0f));
-        //}
+        colliders = collision.CheckCollisions();
+        if (colliders.Count != 0)
+        {
+            foreach (GameObject x in colliders)
+            {
+                x.GetComponent<GalacticBody>().blowUp = true;
+            }
+            blowUp = true;
+        }
+
+        collision.centre = myTransform.position;
 
         if (hasOrbit)
         {
@@ -44,6 +56,10 @@ public class GalacticBody : MonoBehaviour
         MyVector3 newRotation = MyQuaternion.RotateVector(rotationAxis.ToQuaternion(),new MyVector3(0f, 90f, 0f));
         myTransform.rotation.AddAngle(newRotation * rotationScale * Time.deltaTime);
         myTransform.scale = new MyVector3(size, size, size);
+        if (blowUp)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetOrbit(Orbit newOrbit)

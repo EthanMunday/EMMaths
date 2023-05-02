@@ -115,6 +115,10 @@ namespace EMMath
         {
             return Multiply(lhs, rhs);
         }
+        public static MyVector3 operator *(float lhs, MyVector3 rhs)
+        {
+            return Multiply(rhs, lhs);
+        }
         public static MyVector3 Multiply(MyVector3 lhs, MyVector3 rhs)
         {
             MyVector3 rv = new MyVector3();
@@ -168,8 +172,6 @@ namespace EMMath
         public static float DotProduct(MyVector3 lhs, MyVector3 rhs, bool normalised = false)
         {
             float rv = 0.0f;
-
-            
 
             rv = lhs.x * rhs.x  + lhs.y * rhs.y + lhs.z * rhs.z;
 
@@ -357,6 +359,14 @@ namespace EMMath
             y = vecIn.y;
             z = vecIn.z;
         }
+
+        public MyVector3(Ray rayIn)
+        {   
+            x = rayIn.direction.x * 10000;
+            y = rayIn.direction.y * 10000;
+            z = rayIn.direction.z * 10000;
+        }
+
         public MyVector3()
         {
             x = 0.0f;

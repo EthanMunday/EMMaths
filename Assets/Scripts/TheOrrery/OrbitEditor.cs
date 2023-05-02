@@ -19,7 +19,7 @@ public class OrbitEditor : Editor
 
         if (GUILayout.Button("Create Planet"))
         {
-            thisOrbit.CreateBody(Random.Range(5f, 20f));
+            thisOrbit.CreateBody(20f);
         }
     }
 }
